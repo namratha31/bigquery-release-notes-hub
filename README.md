@@ -1,103 +1,143 @@
-# BigQuery Release Notes Hub 🚀
+# 🚀 BigQuery Release Notes Hub
 
-A sleek, modern, glassmorphic dashboard built using **Python Flask** and **Vanilla Frontend Technologies (HTML5, CSS3, JavaScript)**. This application pulls, parses, and formats the official Google Cloud BigQuery Release Notes Atom Feed, giving users a clean workspace to review updates and compose tweets about them.
+A modern Flask-based dashboard that fetches, parses, filters, and presents **Google Cloud BigQuery release notes** in a clean, interactive interface.
 
----
+Built to make technical product updates easier to discover, search, and share.
 
-## 🎨 Preview & Design System
-- **Theme**: Dark Mode by default with radial glowing background meshes.
-- **Aesthetic**: Glassmorphic panels featuring custom blur filters (`backdrop-filter`) and thin borders.
-- **Categorization**: Visual color-coded cards and badges grouping updates by type:
-  - 🟢 **Feature**: Emerald
-  - 🟣 **Announcement**: Purple/Violet
-  - 🟡 **Issue**: Amber/Orange
-  - 🔴 **Deprecated**: Rose
-  - 🔵 **General**: Cyan
+## ✨ Features
 
----
+* 📡 **Live Release Feed** — Fetches official BigQuery release updates.
+* 🧩 **Release Parsing** — Converts grouped Atom feed entries into individual release cards.
+* 🔎 **Instant Search** — Search across release titles, descriptions, and categories.
+* 🏷️ **Category Filters** — Organize updates by Feature, Announcement, Issue, Deprecated, and General.
+* ⚡ **5-Minute Caching** — Reduces unnecessary requests while keeping information reasonably fresh.
+* 🔄 **Manual Refresh** — Force a fresh fetch when required.
+* 📱 **Responsive UI** — Designed for a clean experience across screen sizes.
+* 𝕏 **Share to X** — Compose and share release updates through an interactive sharing modal.
 
-## ⚙️ Key Features
-- **Granular Update Parsing**: Splits bulk daily Atom entries (which often contain multiple distinct releases) into single standalone release note cards based on headers.
-- **Live Search & Filter**: Instant search filtering across titles, descriptions, and categories.
-- **Performance Caching**: Backend in-memory cache with a 5-minute TTL (Time To Live). Manual refresh requests bypass cache to retrieve live updates from Google Cloud servers.
-- **Interactive X/Twitter Share Modal**: A custom-designed X/Twitter composer popup matching the app's style. Includes character length checks, auto-truncates paragraphs, appends specific links/hashtags, and redirects to X Web Intents for seamless sharing.
+## 🛠️ Tech Stack
 
----
+**Backend**
 
-## 📁 Repository Structure
+* Python
+* Flask
+* Requests
+* XML / Atom Feed Parsing
+
+**Frontend**
+
+* HTML5
+* CSS3
+* JavaScript
+
+**Data Source**
+
+* Official Google Cloud BigQuery Release Notes Atom Feed
+
+## 🏗️ Project Structure
+
 ```text
-bigquery-release-tracker/
+bigquery-release-notes-hub/
 │
-├── app.py                 # Flask server, Atom XML parser, and caching logic
-├── .gitignore             # Git exclusion rules
-├── README.md              # Project documentation
+├── app.py
+├── README.md
+├── .gitignore
+│
+├── screenshots/
+│   └── dashboard.png
 │
 ├── templates/
-│   └── index.html         # Application layout and Tweet composer template
+│   └── index.html
 │
 └── static/
     ├── css/
-    │   └── style.css      # Core styles, variables, grids, and glassmorphic designs
+    │   └── style.css
     └── js/
-        └── app.js         # Client controller, search index, filter state, and API requests
+        └── app.js
 ```
 
----
+## ⚙️ How It Works
 
-## 🚀 Installation & Setup
+```text
+Google Cloud BigQuery Release Feed
+                ↓
+        Flask Backend
+                ↓
+        XML / Atom Parsing
+                ↓
+       Release Normalization
+                ↓
+          5-Minute Cache
+                ↓
+          JSON API
+                ↓
+       Interactive Frontend
+                ↓
+       Search / Filter / Share
+```
 
-### Prerequisites
-- Python 3.7 or higher installed.
-- Pip installed.
+## 🚀 Getting Started
 
-### Setup Steps
-1. **Clone or download** this repository.
-2. **Navigate to the directory**:
-   ```bash
-   cd bigquery-release-tracker
-   ```
-3. **Install Dependencies**:
-   Ensure Flask and Requests are installed.
-   ```bash
-   pip install flask requests
-   ```
-4. **Run the Server**:
-   ```bash
-   python app.py
-   ```
-5. **Open in Browser**:
-   Navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000) in your web browser.
+### 1. Clone the repository
 
----
+```bash
+git clone https://github.com/namratha31/bigquery-release-notes-hub.git
+cd bigquery-release-notes-hub
+```
 
-## 🔌 API Documentation
+### 2. Install dependencies
 
-### Get Releases
-Fetches parsed release notes from cache or live feed.
-- **URL**: `/api/releases`
-- **Method**: `GET`
-- **Parameters**:
-  - `refresh=true` *(optional)*: Bypasses backend cache and forces a live network fetch from the GCP XML Feed.
-- **Response Format**: `JSON`
-  ```json
-  {
-    "status": "success",
-    "last_fetched": 1782084920.0,
-    "releases": [
-      {
-        "id": "june-17-2026-feature-1",
-        "date": "June 17, 2026",
-        "updated": "2026-06-17T00:00:00-07:00",
-        "link": "https://docs.cloud.google.com/bigquery/docs/release-notes#June_17_2026",
-        "type": "Feature",
-        "content_html": "<h3>Feature</h3><p>You can enable autonomous embedding generation...",
-        "plain_text": "You can enable autonomous embedding generation..."
-      }
-    ]
-  }
-  ```
+```bash
+pip install flask requests
+```
 
----
+### 3. Run the application
 
-## 🛡️ License
-Distributed under the MIT License. See `LICENSE` for more information.
+```bash
+python app.py
+```
+
+### 4. Open in your browser
+
+```text
+http://127.0.0.1:5000
+```
+
+## 🔌 API
+
+### `GET /api/releases`
+
+Returns parsed BigQuery release updates.
+
+Optional parameter:
+
+```text
+/api/releases?refresh=true
+```
+
+Using `refresh=true` bypasses the existing cache and fetches the latest available release feed.
+
+## 💡 What I Learned
+
+This project helped me practice:
+
+* Building a Flask backend
+* Consuming external data feeds
+* Parsing XML / Atom data
+* Designing a simple caching mechanism
+* Creating frontend filtering and search interactions
+* Connecting frontend interfaces with backend APIs
+* Structuring a small full-stack application
+
+## 🔮 Future Improvements
+
+* Add persistent caching with Redis or SQLite
+* Add pagination for large release histories
+* Add date-range filtering
+* Add automated tests
+* Deploy the application publicly
+* Add scheduled background feed updates
+
+## 📄 License
+
+This project is licensed under the MIT License.
